@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Archive</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Google Analytics 4: GA에서 발급받은 측정 ID로 바꿔주세요. 예: G-ABC123DEFG -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1XTL7HDE9T"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    // post.html은 마크다운 제목을 읽은 뒤 직접 page_view를 보냅니다.
+    gtag('config', 'G-1XTL7HDE9T', { send_page_view: false });
+  </script>
+</head>
+<body>
+  <header class="top-nav">
+    <div class="nav-left">
+      <button id="sidebar-toggle" class="icon-btn">☰</button>
+      <a href="index.html" class="site-title">ARCHIVE</a>
+    </div>
+    <div class="nav-right">
+      <button id="theme-toggle" class="icon-btn">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div id="sidebar-overlay" class="sidebar-overlay"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <button id="sidebar-close" class="icon-btn">✕</button>
+    </div>
+    <div class="profile-section">
+      <div class="avatar"></div> 
+      <h2 class="author-name">ARCHIVE</h2>
+      <p class="bio">Study & Project Notes</p>
+    </div>
+    <nav class="side-menu" id="folder-menu">
+      <h3>Categories</h3>
+      <div id="folder-list-container"></div>
+    </nav>
+    <div class="tags-section">
+      <h3>Tags</h3>
+      <div id="all-tags-cloud" class="tags-cloud"></div>
+    </div>
+  </aside>
+
+  <main class="content">
+    <div class="search-bar">
+      <input type="text" id="search-input" placeholder="제목이나 내용으로 검색...">
+    </div>
+    <div class="controls-container">
+      <div id="subfolder-buttons" class="subfolder-buttons" style="display: none;"></div>
+      <select id="sort-select" class="styled-select">
+        <option value="latest">최신순</option>
+        <option value="oldest">오래된순</option>
+        <option value="title">제목순</option>
+      </select>
+    </div>
+    <div class="grid-container" id="posts-grid">
+      <p style="color: var(--text-muted);">게시글 데이터를 불러오는 중입니다...</p>
+    </div>
+  </main>
+  
+  <script src="script.js"></script>
+</body>
+</html>
