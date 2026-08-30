@@ -1,3 +1,11 @@
+---
+title: Windows 노트북에 Ubuntu 26.04 듀얼 부팅
+summary: Ubuntu 26.04 시작하기
+date: 2026-08-30
+tags:
+  - ubuntu
+  - Booting
+---
 ## Intro
 올해 4월 23일, Ubuntu 26.04 LTS (Resolute Raccoon)이 정식 출시되었고, 한국 시간 기준 8월 28일에는 Ubuntu 26.04.1 LTS가 공개되었다. 이 참에 최신 우분투를 한번 써보고자 설치 과정을 기록하고자 한다.
 
