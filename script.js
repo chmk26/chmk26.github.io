@@ -4,8 +4,8 @@
 */
 const SITE_CONFIG = {
   title: 'ARCHIVE',
-  owner: 'YOUR_GITHUB_ID',
-  repository: 'YOUR_REPOSITORY',
+  owner: 'chmk26',
+  repository: 'chmk26.github.io',
   branch: 'main',
   // Leave empty when category folders (Study/, Projects/, …) are at repository root.
   // Set this to 'posts' only if all posts live inside a posts/ folder.
