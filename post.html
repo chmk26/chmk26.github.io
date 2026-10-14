@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Post · ARCHIVE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar__left">
+      <button class="icon-button" id="sidebar-toggle" type="button" aria-label="사이드바 열기" aria-expanded="true">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+      <a class="wordmark" href="index.html" data-home>ARCHIVE</a>
+    </div>
+    <form class="header-search" id="search-form" role="search">
+      <label class="sr-only" for="search-input">게시글 검색</label>
+      <input id="search-input" type="search" placeholder="Search archive" autocomplete="off">
+      <button class="icon-button" type="submit" aria-label="검색"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
+    </form>
+    <button class="icon-button theme-button" id="theme-toggle" type="button" aria-label="테마 전환"></button>
+  </header>
+  <div class="sidebar-scrim" id="sidebar-scrim"></div>
+  <aside class="sidebar" id="sidebar" aria-label="블로그 탐색">
+    <a class="profile" href="index.html" data-home><span class="profile__avatar" aria-hidden="true">A</span><span class="profile__name">ARCHIVE</span><span class="profile__bio">Study &amp; Project Notes</span></a>
+    <nav class="sidebar-section" aria-label="카테고리"><p class="sidebar-heading">Categories</p><div id="category-list" class="category-list"></div></nav>
+    <section class="sidebar-section" aria-labelledby="tags-heading"><p class="sidebar-heading" id="tags-heading">Tags</p><div id="tag-list" class="tag-list"></div></section>
+  </aside>
+  <main class="main post-main" id="main-content"><article id="app" aria-live="polite"><p class="loading">게시글을 불러오는 중입니다.</p></article></main>
+  <script src="script.js"></script>
+</body>
+</html>
