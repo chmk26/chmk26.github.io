@@ -121,12 +121,13 @@ svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-lineca
 .breadcrumbs { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 2.2rem; color: var(--muted); font: .7rem var(--font-mono); }
 .breadcrumbs a:hover { color: var(--accent); }
 .article-header { padding-bottom: 2rem; border-bottom: 1px solid var(--line); }
-.article-header h1 { margin: 0; font-family: "Black Han Sans", "Noto Sans KR", sans-serif; font-size: var(--post-title-size); font-weight: 400; line-height: 1.45; letter-spacing: .01em; }
+.article-header h1 { margin: 0; font-family: "Pretendard", "Noto Sans KR", sans-serif; font-size: var(--post-title-size); font-weight: 700; line-height: 1.45; letter-spacing: .01em; }
 .article-summary { max-width: 650px; margin: .85rem 0 .6rem; color: var(--muted); font-size: .9rem; }
 .article-header time { color: var(--muted); font: .67rem var(--font-mono); }
 .markdown-body { padding: 2.25rem 0; font-size: var(--post-reading-size); line-height: 1.8; overflow-wrap: anywhere; }
 .markdown-body > :first-child { margin-top: 0; }
 .markdown-body h1, .markdown-body h2, .markdown-body h3 { margin: 2.4em 0 .75em; line-height: 1.35; letter-spacing: -.035em; }
+.markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4, .markdown-body h5, .markdown-body h6 { font-family: "Pretendard", "Noto Sans KR", sans-serif; }
 .markdown-body h1 { font-size: 1.32rem; }
 .markdown-body h2 { font-size: var(--post-heading-size); }
 .markdown-body h3 { font-size: 1.04rem; }
