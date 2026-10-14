@@ -240,6 +240,45 @@ async function renderPost() {
     : `<p>${escapeHtml(preparedBody)}</p>`;
   app.innerHTML = `<header class="article-header"><nav class="breadcrumbs"><a href="index.html?view=blog">Archive</a>${post.categories.map((item, index) => `<span>/</span><a href="${categoryUrl(post.categories.slice(0, index + 1).join('/'))}">${escapeHtml(item)}</a>`).join('')}</nav><h1>${escapeHtml(post.title)}</h1>${post.summary ? `<p class="article-summary">${escapeHtml(post.summary)}</p>` : ''}<time datetime="${escapeHtml(post.date)}">Published ${formatDate(post.date)}</time></header><div class="markdown-body">${rendered}</div><footer class="article-footer"><div class="meta-item"><span>Tags</span><div>${post.tags.map(tag => `<a class="chip" href="${tagUrl(tag)}">#${escapeHtml(tag)}</a>`).join('') || '<em>—</em>'}</div></div><div class="meta-item"><span>Categories</span><div>${post.categories.map((category, index) => `<a class="chip" href="${categoryUrl(post.categories.slice(0, index + 1).join('/'))}">${escapeHtml(category)}</a>`).join('') || '<em>—</em>'}</div></div><div class="meta-item"><span>Updated</span><time datetime="${escapeHtml(post.updated)}">${post.updated ? formatDate(post.updated) : '—'}</time></div></footer>`;
   enhanceObsidianCallouts(app.querySelector('.markdown-body'));
+  addCodeCopyButtons(app.querySelector('.markdown-body'));
+}
+
+function addCodeCopyButtons(root) {
+  root?.querySelectorAll('pre').forEach(pre => {
+    const code = pre.querySelector('code');
+    if (!code || pre.querySelector('.code-copy')) return;
+    const button = document.createElement('button');
+    button.className = 'code-copy';
+    button.type = 'button';
+    button.setAttribute('aria-label', '코드 복사');
+    button.setAttribute('title', '코드 복사');
+    button.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="1"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg>';
+    button.addEventListener('click', async () => {
+      const original = button.innerHTML;
+      try {
+        await copyText(code.innerText);
+        button.textContent = 'Copied';
+        button.classList.add('is-copied');
+      } catch {
+        button.textContent = 'Failed';
+      }
+      setTimeout(() => { button.innerHTML = original; button.classList.remove('is-copied'); }, 1500);
+    });
+    pre.appendChild(button);
+  });
+}
+
+async function copyText(text) {
+  if (navigator.clipboard?.writeText) return navigator.clipboard.writeText(text);
+  const fallback = document.createElement('textarea');
+  fallback.value = text;
+  fallback.style.position = 'fixed';
+  fallback.style.opacity = '0';
+  document.body.appendChild(fallback);
+  fallback.select();
+  const copied = document.execCommand('copy');
+  fallback.remove();
+  if (!copied) throw new Error('Copy unavailable');
 }
 
 function enhanceObsidianCallouts(root) {

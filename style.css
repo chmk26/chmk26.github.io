@@ -7,6 +7,9 @@
   --base-size: 16px;
   --reading-size: 1.02rem;
   --section-heading-size: 1.35rem;
+  --post-reading-size: .92rem;
+  --post-heading-size: 1.18rem;
+  --post-title-size: 1.28rem;
   --sidebar-width: 280px;
   --topbar-height: 64px;
   --page-width: 1120px;
@@ -118,15 +121,15 @@ svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-lineca
 .breadcrumbs { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 2.2rem; color: var(--muted); font: .7rem var(--font-mono); }
 .breadcrumbs a:hover { color: var(--accent); }
 .article-header { padding-bottom: 2rem; border-bottom: 1px solid var(--line); }
-.article-header h1 { margin: 0; font-size: var(--section-heading-size); line-height: 1.35; letter-spacing: -.035em; }
-.article-summary { max-width: 650px; margin: 1.25rem 0 .75rem; color: var(--muted); font-size: 1rem; }
-.article-header time { color: var(--muted); font: .72rem var(--font-mono); }
-.markdown-body { padding: 2.75rem 0; font-size: var(--reading-size); line-height: 1.85; overflow-wrap: anywhere; }
+.article-header h1 { margin: 0; font-family: "Black Han Sans", "Noto Sans KR", sans-serif; font-size: var(--post-title-size); font-weight: 400; line-height: 1.45; letter-spacing: .01em; }
+.article-summary { max-width: 650px; margin: .85rem 0 .6rem; color: var(--muted); font-size: .9rem; }
+.article-header time { color: var(--muted); font: .67rem var(--font-mono); }
+.markdown-body { padding: 2.25rem 0; font-size: var(--post-reading-size); line-height: 1.8; overflow-wrap: anywhere; }
 .markdown-body > :first-child { margin-top: 0; }
 .markdown-body h1, .markdown-body h2, .markdown-body h3 { margin: 2.4em 0 .75em; line-height: 1.35; letter-spacing: -.035em; }
-.markdown-body h1 { font-size: 1.7rem; }
-.markdown-body h2 { font-size: var(--section-heading-size); }
-.markdown-body h3 { font-size: 1.1em; }
+.markdown-body h1 { font-size: 1.32rem; }
+.markdown-body h2 { font-size: var(--post-heading-size); }
+.markdown-body h3 { font-size: 1.04rem; }
 .markdown-body p, .markdown-body ul, .markdown-body ol { margin: 0 0 1.3rem; }
 .markdown-body li { margin: .25rem 0; }
 .markdown-body a { color: var(--accent); text-decoration: underline; text-underline-offset: .18em; }
@@ -149,8 +152,13 @@ svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-lineca
 .callout-example { --callout-color: #7768ac; }
 .callout-quote, .callout-cite { --callout-color: #77808b; }
 .markdown-body code { padding: .13em .32em; border-radius: 4px; background: var(--surface-subtle); font: .84em var(--font-mono); }
-.markdown-body pre { overflow: auto; margin: 1.5rem 0; padding: 1rem 1.2rem; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+.markdown-body pre { position: relative; overflow: auto; margin: 1.5rem 0; padding: 1rem 1.2rem; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
 .markdown-body pre code { padding: 0; background: transparent; font-size: .78em; }
+.code-copy { position: absolute; top: .55rem; right: .55rem; display: grid; place-items: center; min-width: 30px; height: 28px; padding: 0 .45rem; border: 1px solid var(--line); border-radius: 5px; background: var(--surface-subtle); color: var(--muted); font: 500 .65rem var(--font-mono); opacity: 0; transition: opacity .15s, color .15s, border-color .15s; }
+.code-copy svg { width: 14px; height: 14px; }
+.markdown-body pre:hover .code-copy, .markdown-body pre:focus-within .code-copy { opacity: 1; }
+.code-copy:hover { border-color: var(--accent); color: var(--accent); }
+.code-copy.is-copied { color: var(--accent); opacity: 1; }
 .markdown-body img { max-width: 100%; border: 1px solid var(--line); border-radius: 8px; }
 .markdown-body .attachment-video { display: block; width: 100%; max-height: 620px; margin: 1.5rem 0; border: 1px solid var(--line); border-radius: 8px; background: #000; }
 .markdown-body .attachment-pdf { display: block; width: 100%; height: min(72vh, 760px); margin: 1.5rem 0 .45rem; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
