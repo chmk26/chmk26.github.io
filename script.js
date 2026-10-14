@@ -199,7 +199,7 @@ function renderListing() {
   const selected = filterPosts(q);
   document.title = `${view === 'home' ? 'Home' : view === 'blog' ? 'Blog' : 'Search'} · ${SITE_CONFIG.title}`;
   if (view === 'home') {
-    app.innerHTML = `<section class="home-intro"><a class="home-profile" href="index.html" aria-label="ARCHIVE 홈"><span class="profile__avatar" aria-hidden="true">A</span><strong>ARCHIVE</strong><small>Study &amp; Project Notes</small></a><p class="eyebrow">PERSONAL KNOWLEDGE ARCHIVE</p><h1>배움과 작업의 흔적을<br>차분히 쌓아갑니다.</h1><p>Study, projects, and paper reviews.</p><a class="text-link" href="index.html?view=blog">모든 기록 보기 ${ICONS.arrow}</a></section><section class="listing-section"><div class="section-title"><div><p class="eyebrow">RECENT POSTS</p><h2>최근 기록</h2></div><a class="quiet-link" href="index.html?view=blog">All posts</a></div>${postList(selected.slice(0, SITE_CONFIG.homePostLimit), 'home-list')}</section>`;
+    app.innerHTML = `<section class="home-intro"><a class="home-profile" href="index.html" aria-label="ARCHIVE 홈"><span class="profile__avatar" aria-hidden="true">A</span><strong>ARCHIVE</strong><small>Study &amp; Project Notes</small></a></section>`;
   } else {
     const title = view === 'blog' ? 'All Posts' : searchTitle(q);
     app.innerHTML = `<section class="page-heading"><p class="eyebrow">${view === 'blog' ? `${posts.length} POSTS` : 'SEARCH RESULTS'}</p><h1>${title}</h1></section>${controls()}<section id="listing-results" class="${view === 'blog' ? 'post-grid' : 'search-list'}">${postList(sortPosts(selected), view === 'blog' ? 'post-grid' : 'search-list')}</section>`;
@@ -239,6 +239,49 @@ async function renderPost() {
     ? DOMPurify.sanitize(marked.parse(preparedBody, { gfm: true, breaks: true }), { ADD_TAGS: ['video', 'source', 'iframe'], ADD_ATTR: ['controls', 'src', 'type', 'title', 'allowfullscreen', 'loading', 'target', 'rel'] })
     : `<p>${escapeHtml(preparedBody)}</p>`;
   app.innerHTML = `<header class="article-header"><nav class="breadcrumbs"><a href="index.html?view=blog">Archive</a>${post.categories.map((item, index) => `<span>/</span><a href="${categoryUrl(post.categories.slice(0, index + 1).join('/'))}">${escapeHtml(item)}</a>`).join('')}</nav><h1>${escapeHtml(post.title)}</h1>${post.summary ? `<p class="article-summary">${escapeHtml(post.summary)}</p>` : ''}<time datetime="${escapeHtml(post.date)}">Published ${formatDate(post.date)}</time></header><div class="markdown-body">${rendered}</div><footer class="article-footer"><div class="meta-item"><span>Tags</span><div>${post.tags.map(tag => `<a class="chip" href="${tagUrl(tag)}">#${escapeHtml(tag)}</a>`).join('') || '<em>—</em>'}</div></div><div class="meta-item"><span>Categories</span><div>${post.categories.map((category, index) => `<a class="chip" href="${categoryUrl(post.categories.slice(0, index + 1).join('/'))}">${escapeHtml(category)}</a>`).join('') || '<em>—</em>'}</div></div><div class="meta-item"><span>Updated</span><time datetime="${escapeHtml(post.updated)}">${post.updated ? formatDate(post.updated) : '—'}</time></div></footer>`;
+  enhanceObsidianCallouts(app.querySelector('.markdown-body'));
+}
+
+function enhanceObsidianCallouts(root) {
+  if (!root) return;
+  root.querySelectorAll('blockquote').forEach(quote => {
+    const firstParagraph = quote.querySelector(':scope > p');
+    if (!firstParagraph) return;
+    const lines = firstParagraph.innerHTML.split(/<br\s*\/?\s*>/i);
+    const probe = document.createElement('span');
+    probe.innerHTML = lines[0];
+    const marker = probe.textContent.trim().match(/^\[!([a-z0-9_-]+)\]([+-])?(?:\s*(.*))?$/i);
+    if (!marker) return;
+
+    const [, type, foldState, explicitTitle] = marker;
+    const title = explicitTitle || type.replace(/[-_]/g, ' ').replace(/\b\w/g, letter => letter.toUpperCase());
+    const content = document.createElement('div');
+    content.className = 'callout-content';
+    const firstBody = lines.slice(1).join('<br>');
+    const laterParagraphs = [...quote.children].slice(1).map(element => element.outerHTML).join('');
+    content.innerHTML = `${firstBody}${laterParagraphs}`;
+
+    const callout = document.createElement('aside');
+    callout.className = `callout callout-${type.toLocaleLowerCase()}`;
+    const header = document.createElement('div');
+    header.className = 'callout-header';
+    header.textContent = title;
+    if (foldState) {
+      callout.classList.add('is-foldable');
+      callout.classList.toggle('is-collapsed', foldState === '-');
+      header.setAttribute('role', 'button');
+      header.setAttribute('tabindex', '0');
+      header.setAttribute('aria-expanded', String(foldState !== '-'));
+      const toggle = () => {
+        const collapsed = callout.classList.toggle('is-collapsed');
+        header.setAttribute('aria-expanded', String(!collapsed));
+      };
+      header.addEventListener('click', toggle);
+      header.addEventListener('keydown', event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); toggle(); } });
+    }
+    callout.append(header, content);
+    quote.replaceWith(callout);
+  });
 }
 
 function prepareAttachments(markdown, post) {
