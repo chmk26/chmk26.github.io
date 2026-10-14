@@ -199,7 +199,7 @@ function renderListing() {
   const selected = filterPosts(q);
   document.title = `${view === 'home' ? 'Home' : view === 'blog' ? 'Blog' : 'Search'} · ${SITE_CONFIG.title}`;
   if (view === 'home') {
-    app.innerHTML = `<section class="home-intro"><a class="home-profile" href="index.html" aria-label="ARCHIVE 홈"><span class="profile__avatar" aria-hidden="true">A</span><strong>ARCHIVE</strong><small>Study &amp; Project Notes</small></a></section>`;
+    app.innerHTML = `<section class="home-intro"><a class="home-profile" href="index.html" aria-label="ARCHIVE 홈"><span class="profile__avatar" aria-hidden="true">A</span><strong>ARCHIVE</strong><small>Study &amp; Project Notes</small></a></section><section class="listing-section"><div class="section-title"><div><p class="eyebrow">RECENT POSTS</p><h2>최근 기록</h2></div><a class="quiet-link" href="index.html?view=blog">All posts</a></div>${postList(selected.slice(0, SITE_CONFIG.homePostLimit), 'home-list')}</section>`;
   } else {
     const title = view === 'blog' ? 'All Posts' : searchTitle(q);
     app.innerHTML = `<section class="page-heading"><p class="eyebrow">${view === 'blog' ? `${posts.length} POSTS` : 'SEARCH RESULTS'}</p><h1>${title}</h1></section>${controls()}<section id="listing-results" class="${view === 'blog' ? 'post-grid' : 'search-list'}">${postList(sortPosts(selected), view === 'blog' ? 'post-grid' : 'search-list')}</section>`;

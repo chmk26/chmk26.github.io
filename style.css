@@ -76,7 +76,7 @@ svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-lineca
 .main { width: min(var(--page-width), calc(100% - var(--sidebar-width))); min-height: 100vh; margin: var(--topbar-height) 0 0 var(--sidebar-width); padding: clamp(2.5rem, 6vw, 5.5rem) clamp(1.25rem, 5vw, 5rem); transition: margin-left .25s, width .25s; }
 .sidebar-closed .main { width: min(var(--page-width), 100%); margin-left: 0; }
 .loading { color: var(--muted); }
-.home-intro { display: grid; min-height: calc(100vh - var(--topbar-height) - clamp(5rem, 12vw, 11rem)); place-items: center; text-align: center; }
+.home-intro { display: grid; min-height: clamp(20rem, 56vh, 34rem); place-items: center; text-align: center; }
 .home-profile { display: flex; flex-direction: column; align-items: center; width: fit-content; }
 .home-profile .profile__avatar { width: 112px; height: 112px; margin-bottom: 1.15rem; font-size: 2rem; }
 .home-profile strong { font-size: clamp(1.5rem, 3vw, 2.15rem); letter-spacing: .1em; }
