@@ -202,7 +202,7 @@ function renderListing() {
     app.innerHTML = `<section class="home-intro"><a class="home-profile" href="index.html" aria-label="ARCHIVE 홈"><span class="profile__avatar" aria-hidden="true">A</span><strong>ARCHIVE</strong><small>Study &amp; Project Notes</small></a></section><section class="listing-section"><div class="section-title"><div><p class="eyebrow">RECENT POSTS</p><h2>최근 기록</h2></div><a class="quiet-link" href="index.html?view=blog">All posts</a></div>${postList(selected.slice(0, SITE_CONFIG.homePostLimit), 'home-list')}</section>`;
   } else {
     const title = view === 'blog' ? 'All Posts' : searchTitle(q);
-    app.innerHTML = `<section class="page-heading"><p class="eyebrow">${view === 'blog' ? `${posts.length} POSTS` : 'SEARCH RESULTS'}</p><h1>${title}</h1></section>${controls()}<section id="listing-results" class="${view === 'blog' ? 'post-grid' : 'search-list'}">${postList(sortPosts(selected), view === 'blog' ? 'post-grid' : 'search-list')}</section>`;
+    app.innerHTML = `<section class="page-heading"><p class="eyebrow">${view === 'blog' ? `${posts.length} POSTS` : 'SEARCH RESULTS'}</p><h1>${title}</h1></section>${controls()}<section id="listing-results" class="post-grid">${postList(sortPosts(selected), 'post-grid')}</section>`;
     setupSort(selected, view);
   }
 }
@@ -219,7 +219,7 @@ function filterPosts(query = '') {
 function controls() { return `<div class="listing-controls"><p id="result-count" class="muted"></p><label class="sort-label">정렬 <select id="sort-select"><option value="latest">최신순</option><option value="oldest">오래된순</option><option value="title">이름순</option></select></label></div>`; }
 function setupSort(selected, view) {
   const select = document.getElementById('sort-select');
-  const render = () => { document.getElementById('listing-results').innerHTML = postList(sortPosts(selected, select.value), view === 'blog' ? 'post-grid' : 'search-list'); document.getElementById('result-count').textContent = `${selected.length} posts`; };
+  const render = () => { document.getElementById('listing-results').innerHTML = postList(sortPosts(selected, select.value), 'post-grid'); document.getElementById('result-count').textContent = `${selected.length} posts`; };
   select.addEventListener('change', render); render();
 }
 function sortPosts(items, mode = 'latest') { return [...items].sort((a, b) => mode === 'title' ? localeSort(a.title, b.title) : mode === 'oldest' ? dateValue(a.date) - dateValue(b.date) : dateValue(b.date) - dateValue(a.date)); }

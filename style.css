@@ -10,6 +10,8 @@
   --sidebar-width: 280px;
   --topbar-height: 64px;
   --page-width: 1120px;
+  --layout-left: max(0px, calc((100vw - var(--sidebar-width) - var(--page-width)) / 2));
+  --closed-layout-left: max(0px, calc((100vw - var(--page-width)) / 2));
   --radius: 12px;
   --bg: #f8f8f6;
   --surface: #ffffff;
@@ -168,12 +170,20 @@ svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-lineca
   .main, .sidebar-closed .main { width: 100%; margin-left: 0; padding: 2.5rem 1.2rem; }
   .home-intro { padding: 2rem 0 4rem; }
 }
+@media (min-width: 820px) {
+  .sidebar { left: var(--layout-left); }
+  .main { width: min(var(--page-width), calc(100vw - var(--sidebar-width))); margin-left: calc(var(--layout-left) + var(--sidebar-width)); }
+  .sidebar-closed .main { width: min(var(--page-width), 100%); margin-left: var(--closed-layout-left); }
+}
 @media (max-width: 1120px) {
   .post-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 580px) {
   .header-search { width: min(45vw, 220px); }
   .post-grid { grid-template-columns: 1fr; }
+  .post-grid .post-card { min-height: unset; padding: 1.1rem; }
+  .post-grid .post-summary { -webkit-line-clamp: 2; }
+  .post-grid .post-card time { margin-top: .7rem; }
   .post-card--row { gap: .75rem; }
   .post-card--row time { font-size: .6rem; }
   .meta-item { grid-template-columns: 1fr; gap: .25rem; }
